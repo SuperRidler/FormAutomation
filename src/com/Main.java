@@ -30,14 +30,26 @@ public class Main {
 	int[][] purposeSel;
 	//Select (+135, +1/2/3)
 	//Select (+131, +53)
+	static int PURPOSE_OPTION = 0;
 	final String PURPOSE_FILE_NAME = "Purpose.png";
 	
 	//Reason text box
 	int[][] reasonSel;
 	final String REASON_FILE_NAME = "Reason.png";
-	final String REASON_TEXT = "Install";
+	static String REASON_TEXT = "Install";
 	
 	public static void main(String[] args) {
+		if(args.length > 0){
+			try{
+				int x = Integer.parseInt(args[0]);
+				if(x==1){
+					REASON_TEXT = "Fault";
+					PURPOSE_OPTION = 1;
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
 		new Main();
 	}
 	
@@ -237,14 +249,22 @@ public class Main {
 				e.printStackTrace();
 			}
 			BufferedImage bi2 = getImage();
-			if(bi2.getRGB(p.x+98, p.y+11) == -1){
-				robocop.mouseMove(p.x+131, p.y+74);
+			if(PURPOSE_OPTION==1){
+				if(bi2.getRGB(p.x+98, p.y+11) == -1){
+					robocop.mouseMove(p.x+131, p.y+74);
+				}else{
+					robocop.mouseMove(p.x+131, p.y-50);
+				}
 			}else{
-				robocop.mouseMove(p.x+131, p.y-50);
+				if(bi2.getRGB(p.x+98, p.y+11) == -1){
+					robocop.mouseMove(p.x+131, p.y+93);
+				}else{
+					robocop.mouseMove(p.x+131, p.y-33);
+				}
 			}
 			mouseClick();
 			robocop.mouseMove(p2.x, p2.y);
-			mouseClick();
+			//mouseClick();
 		}else{
 			System.out.println("No Match on Purpose");
 		}
