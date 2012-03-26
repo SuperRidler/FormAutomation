@@ -236,10 +236,11 @@ public class Main {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			if(bi.getRGB(p.x+98, p.y+11) == -1){
+			BufferedImage bi2 = getImage();
+			if(bi2.getRGB(p.x+98, p.y+11) == -1){
 				robocop.mouseMove(p.x+131, p.y+74);
 			}else{
-				robocop.mouseMove(p.x+131, p.y-100);
+				robocop.mouseMove(p.x+131, p.y-50);
 			}
 			mouseClick();
 			robocop.mouseMove(p2.x, p2.y);
