@@ -22,6 +22,8 @@ public class Main {
 	Rectangle screenRec;
 	Threader tred;
 	
+	final String IMAGE_PATH = "Images\\";
+	
 	//MOT tick box
 	int[][] motSel;
 	//Tick (49, 6)
@@ -127,7 +129,7 @@ public class Main {
 	public int[][] getSel(String fileName){
 		BufferedImage img = null;
 		try {
-		    img = ImageIO.read(new File(fileName));
+		    img = ImageIO.read(new File(IMAGE_PATH+fileName));
 		} catch (IOException e) {
 			System.out.println("Error");
 			e.printStackTrace();
