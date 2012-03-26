@@ -20,6 +20,7 @@ public class Main {
 	Robot robocop;
 	int screenWidth, screenHeight;
 	Rectangle screenRec;
+	Threader tred;
 	
 	//MOT tick box
 	int[][] motSel;
@@ -37,6 +38,8 @@ public class Main {
 	int[][] reasonSel;
 	final String REASON_FILE_NAME = "Reason.png";
 	static String REASON_TEXT = "Install";
+	
+	static Thread thread;
 	
 	public static void main(String[] args) {
 		if(args.length > 0){
@@ -69,36 +72,7 @@ public class Main {
 			e1.printStackTrace();
 		}
 		
-		Runnable run = new Runnable(){
-
-			@Override
-			public void run() {
-				try{
-					while(true){
-						System.out.println("Iteration");
-
-						//Get our screen-shot
-						BufferedImage bi = getImage();
-						
-						checkMot(bi);
-						
-						checkReason(bi);
-						
-						checkPurpose(bi);
-						
-						System.out.println("Done");
-						Thread.sleep(50L);
-					}
-				}catch(Exception e){
-					System.out.println("Error: ");
-					e.printStackTrace();
-				}
-			}
-			
-		};
-		
-		Thread thread = new Thread(run);
-		thread.start();
+		new GUI(this);
 		
 	}
 	
@@ -249,7 +223,7 @@ public class Main {
 				e.printStackTrace();
 			}
 			BufferedImage bi2 = getImage();
-			if(PURPOSE_OPTION==1){
+			if(PURPOSE_OPTION==0){
 				if(bi2.getRGB(p.x+98, p.y+11) == -1){
 					robocop.mouseMove(p.x+131, p.y+74);
 				}else{
@@ -294,5 +268,31 @@ public class Main {
             System.out.println(e);
         }
 	}
- 
+	
+	public void setInstall(){
+		REASON_TEXT = "Install";
+		PURPOSE_OPTION = 0;
+		System.out.println("Set Install");
+	}
+	
+	public void setFault(){
+		REASON_TEXT = "Fault";
+		PURPOSE_OPTION = 1;
+		System.out.println("Set Fault");
+	}
+	
+	public void toggle(){
+		if(thread != null){
+			thread.stop();
+			thread = null;
+			System.out.println("Thread Stopped");
+		}else{
+			tred = new Threader(this);
+			thread = new Thread(tred);
+			thread.start();
+			System.out.println("Thread Started");
+		}
+	}
+	
+	
 }
