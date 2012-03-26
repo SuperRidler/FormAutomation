@@ -77,6 +77,11 @@ public class GUI  implements ActionListener{
 		}else if(action.equals("install")){
 			parent.setInstall();
 		}else if(action.equals("toggle")){
+			if(onoff.getText().equals("Off")){
+				onoff.setText("On");
+			}else{
+				onoff.setText("Off");
+			}
 			parent.toggle();
 		}
 	}
